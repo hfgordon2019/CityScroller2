@@ -3,42 +3,44 @@
 		<title>City Scroller</title>
 		<script src="http://cloud.github.com/downloads/processing-js/processing-js/processing-1.4.1.min.js"></script>
 		<script type="text/processing" data-processing-target="mycanvas">
-		
-		Building testBuilding = new Building(0, random(30,100));	        
-		//TODO: Create an instance of your Skyline object	
-        
-        //since these are variables we don't want to ever change in the code, we capitalize them 
+
+		Building testBuilding = new Building(0, random(30,100));
+		//TODO: Create an instance of your Skyline object
+
+        //since these are variables we don't want to ever change in the code, we capitalize them
         var WINDOW_WIDTH = screen.width;
-        var WINDOW_HEIGHT = 400; 
+        var WINDOW_HEIGHT = 400;
         var GREY = 204;
-    
+
         //This function only runs once at the start of the program
         void setup() {
           size(WINDOW_WIDTH, WINDOW_HEIGHT); //sets the size of the window
           frameRate(30); //how many times the draw function is called per second
         }
-        
+
         //called repeatedly
-        void draw() { 
+        void draw() {
         	background(0); //needed in the draw function to "clear" the screen between updates
 	  		testBuilding.drawAndUpdate();
-	  		//TODO: Call drawSkyline on your Skyline object
-	  
-        } 
+	  		//TODO:Call drawSkyline on your Skyline object
+				drawSkyline();
+        }
 
 
 		class Skyline {
 			ArrayList<Building> buildingList;
 			var xPosition;
-			
+
 			Skyline(){
 				buildingList = new ArrayList<Building>();
 				xPosition = 0;
 				fillSkyline();//when a Skyline is created it automatically has enough buildings to fill the screen
 			}
-			
+
 			void moveSkyline(){
 				//TODO:update and draw the skyline, add buildings as buildings leave the screen
+				update();
+				drawSkyline();
 			}
 
 			void drawSkyline(){
@@ -60,15 +62,15 @@
 				//TODO:add enough buildings to fill the screen
 			}
 		}
-        
+
         class Building {
         	var xPosition, yPosition, buildingHeight, buildingWidth;
         	var buildingColor;
         	Building(var xPos, var bw ) {
         		buildingHeight = random(30,250);
         		buildingWidth = bw;
-        		xPosition = xPos;
-        		buildingColor = color(0,0,255); 
+        		xPosition = random(10,400);
+        		buildingColor = color(0,0,255);
         	}
 
         	void drawAndUpdate(){
@@ -81,17 +83,16 @@
                 fill(buildingColor);
         		rect(xPosition,WINDOW_HEIGHT- buildingHeight,buildingWidth,buildingHeight);
         	}
-        	
+
         	void update(var speed){
         		xPosition += speed;
         	}
-        	
+
         }
-        </script> 
+        </script>
     </head>
-    
+
     <body>
 		<canvas id="mycanvas"></canvas>
 	</body>
 </html>
- 
