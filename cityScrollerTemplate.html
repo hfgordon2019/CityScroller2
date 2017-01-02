@@ -11,7 +11,9 @@
 				int REFRESH_RATE_PER_SECOND = 30;
 				int GREY = 204;
 // i added a test building
- 	Building testBuilding = new Building (0,300);
+ 	Building testBuilding = new Building (0, 200);
+	Building secondBuilding = new Building (0, 200);
+	Building thirdBuilding = new Building (0,200);
 
         //This function only runs once at the start of the program
         void setup() {
@@ -27,6 +29,8 @@
 			//drawSkyline();
 
 			testBuilding.moveBuilding();
+			secondBuilding.moveBuilding();
+			thirdBuilding.moveBuilding();
         }
 
 		class Skyline {
@@ -56,12 +60,13 @@
 			}
 
 			void addBuilding(){
-				var BuildingWidth = random(10,80);
-				Building Building = new Building(xPosition, BuildingWidth);
-				buildingList.add(Building);
-				xPosition = BuildingWidth;
-			}
+					var buildingWidth = random(10,80);
+					Building newBuilding = new Building(xPosition, buildingWidth);
 
+					buildingList.add(newBuilding);
+
+		 		xPosition += buildingWidth +5;
+				}
 		}
 
         class Building {
@@ -84,8 +89,9 @@
 					{
 					 buildingX ++;
 			  		//if (buildingX>640){
+					//add Building();
 						//buildingX = -40;
-				 //}
+				//}
 				  }
 
 					void moveBuilding()
