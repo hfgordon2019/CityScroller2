@@ -4,37 +4,38 @@
 		<script src="http://cloud.github.com/downloads/processing-js/processing-js/processing-1.4.1.min.js"></script>
 		<script type="text/processing" data-processing-target="mycanvas">
 
-		Building testBuilding = new Building(0, random(30,100));
-		//TODO: Create an instance of your Skyline object
-
         //since these are variables we don't want to ever change in the code, we capitalize them
-        var WINDOW_WIDTH = screen.width;
-        var WINDOW_HEIGHT = 400;
-        var GREY = 204;
+        int WINDOW_WIDTH = 600;
+        int WINDOW_HEIGHT = 400;
+
+				int REFRESH_RATE_PER_SECOND = 30;
+				int GREY = 204;
+
 
         //This function only runs once at the start of the program
         void setup() {
           size(WINDOW_WIDTH, WINDOW_HEIGHT); //sets the size of the window
-          frameRate(30); //how many times the draw function is called per second
+        frameRate(REFRESH_RATE_PER_SECOND); //how many times the draw function is called per second
         }
 
         //called repeatedly
         void draw() {
-        	background(0); //needed in the draw function to "clear" the screen between updates
-	  		testBuilding.drawAndUpdate();
+        	background(0,0,0); //needed in the draw function to "clear" the screen between updates
+
 	  		//TODO:Call drawSkyline on your Skyline object
-				drawSkyline();
+			//drawSkyline();
         }
 
 
 		class Skyline {
+			//attributes
 			ArrayList<Building> buildingList;
 			var xPosition;
 
 			Skyline(){
 				buildingList = new ArrayList<Building>();
 				xPosition = 0;
-				fillSkyline();//when a Skyline is created it automatically has enough buildings to fill the screen
+			//when a Skyline is created it automatically has enough buildings to fill the screen
 			}
 
 			void moveSkyline(){
@@ -43,52 +44,56 @@
 				drawSkyline();
 			}
 
-			void drawSkyline(){
-				//TODO:loop through buildingList and draw each Building
-			}
-
-			void update(){
-				//TODO:loop through buildingList and update each Building
+				void drawSkyline()
+				{
+				for(var i = 0; i < buildingList.size(); i++) {
+					Building Building = buildingList.get(i);
+					currentBuilding.drawBuilding();
+					currentBuilding.updateAndScroll();
+				} //TODO:loop through buildingList and draw each Building
 			}
 
 			void addBuilding(){
-				var randomBuildingWidth = random(10,80);
-				Building currentBuilding = new Building(xPosition, randomBuildingWidth);
-				buildingList.add(currentBuilding);
-				xPosition += randomBuildingWidth;
+				var BuildingWidth = random(10,80);
+				Building Building = new Building(xPosition, BuildingWidth);
+				buildingList.add(Building);
+				xPosition = BuildingWidth;
 			}
 
-			void fillSkyline(){
-				//TODO:add enough buildings to fill the screen
-			}
 		}
 
         class Building {
-        	var xPosition, yPosition, buildingHeight, buildingWidth;
-        	var buildingColor;
-        	Building(var xPos, var bw ) {
-        		buildingHeight = random(30,250);
-        		buildingWidth = bw;
-        		xPosition = random(10,400);
-        		buildingColor = color(0,0,255);
-        	}
+					//attributes
+        	var xPosition, yPosition, buildingHeight, buildingWidth, buildingColor;
+//attributes on left, parameters on right
+					Building (var xPos,var buildingY) {
+					 buildingX = random (3,590);
+					 buildingY = random(300,500);
+					 buildingHeight = 600-buildingY;
+					 buildingWidth = random(30,70);
+					}
 
-        	void drawAndUpdate(){
-        		var testSpeed = 5;
-				drawBuilding();
-				update(testSpeed);
-			}
+					void drawBuilding(){
+ 	         fill(0,0,255);
+ 	         rect(buildingX, buildingY, buildingWidth, buildingHeight);
+          }
+					void update()
+					{
+						centerX ++;
+						if (centerX>640){
+							centerX = -40;
+						}
+				  }
 
-        	void drawBuilding(){
-                fill(buildingColor);
-        		rect(xPosition,WINDOW_HEIGHT- buildingHeight,buildingWidth,buildingHeight);
-        	}
+					void moveBuilding()
+					{
+						update();
+						drawBuilding();
 
-        	void update(var speed){
-        		xPosition += speed;
-        	}
+					}
+				}
 
-        }
+
         </script>
     </head>
 
