@@ -10,7 +10,8 @@
 
 				int REFRESH_RATE_PER_SECOND = 30;
 				int GREY = 204;
-
+// i added a test building
+ 	Building testBuilding = new Building (0,300);
 
         //This function only runs once at the start of the program
         void setup() {
@@ -24,8 +25,9 @@
 
 	  		//TODO:Call drawSkyline on your Skyline object
 			//drawSkyline();
-        }
 
+			testBuilding.moveBuilding();
+        }
 
 		class Skyline {
 			//attributes
@@ -66,9 +68,9 @@
 					//attributes
         	var xPosition, yPosition, buildingHeight, buildingWidth, buildingColor;
 //attributes on left, parameters on right
-					Building (var xPos,var buildingY) {
-					 buildingX = random (3,590);
-					 buildingY = random(300,500);
+					Building (var xPos,var bY) {
+					 buildingX = xPos;
+					 buildingY = bY;
 					 buildingHeight = 600-buildingY;
 					 buildingWidth = random(30,70);
 					}
@@ -77,22 +79,21 @@
  	         fill(0,0,255);
  	         rect(buildingX, buildingY, buildingWidth, buildingHeight);
           }
+
 					void update()
 					{
-						centerX ++;
-						if (centerX>640){
-							centerX = -40;
-						}
+					 buildingX ++;
+			  		//if (buildingX>640){
+						//buildingX = -40;
+				 //}
 				  }
 
 					void moveBuilding()
 					{
 						update();
 						drawBuilding();
-
 					}
 				}
-
 
         </script>
     </head>
