@@ -36,12 +36,12 @@
 		class Skyline {
 			//attributes
 			ArrayList<Building> buildingList;
-			var xPosition;
+			var buildingX;
 
 			Skyline(){
 				buildingList = new ArrayList<Building>();
-				xPosition = 0;
-			//when a Skyline is created it automatically has enough buildings to fill the screen
+				buildingX = 1;
+			  //when a Skyline is created it automatically has enough buildings to fill the screen
 			}
 
 			void moveSkyline(){
@@ -61,17 +61,17 @@
 
 			void addBuilding(){
 					var buildingWidth = random(10,80);
-					Building newBuilding = new Building(xPosition, buildingWidth);
+					Building newBuilding = new Building(buildingX, buildingWidth);
 
 					buildingList.add(newBuilding);
 
-		 		xPosition += buildingWidth +5;
+		 		buildingX += buildingWidth +5;
 				}
 			}
 
         class Building {
 					//attributes
-        	var xPosition, yPosition, buildingHeight, buildingWidth, buildingColor;
+        	var buildingX, buildingY, buildingHeight, buildingWidth, buildingColor;
 //attributes on left, parameters on right
 					Building (var xPos,var bY) {
 					 buildingX = xPos;
@@ -88,10 +88,10 @@
 					void update()
 					{
 					 buildingX ++;
-			  		//if (buildingX>640){
-					//add Building();
+			  		if (buildingX>640){
+					add Building();
 						//buildingX = -40;
-				//}
+				}
 				  }
 
 					void moveBuilding()
