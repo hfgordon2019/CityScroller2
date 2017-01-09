@@ -39,6 +39,12 @@
 				noStroke();
 				fill(234,229,234);
 				ellipse(20,20,20,20);
+
+				fill(255,255,255);
+				ellipse(500,20,7,7);
+
+				fill(255,255,255);
+				ellipse(210,20,7,7);
         }
 
 		class Skyline {
@@ -67,10 +73,10 @@
 				{
 				for(var i = 0; i < buildingList.size(); i++) {
 					Building currentBuilding = buildingList.get(i);
-				  if (currentBuilding.getBuildingX() < 400){
+				  if (currentBuilding.getBuildingX() > 400){
 							 fill(188,214,226);
 						}
-						if (currentBuilding.getBuildingX() < 300){
+						if (currentBuilding.getBuildingX() < 400){
 								 fill(153,175,226);
 							}
 						if (currentBuilding.getBuildingX() < 200){
@@ -129,7 +135,25 @@
 					stroke(0,0,0);
  	        rect(buildingX, buildingY, buildingWidth, buildingHeight);
 
-					
+					windowX = buildingX + 10;
+						windowOther = buildingX+ buildingWidth - buildingWidth/5 - 10;
+						windowY = buildingY+ 5;
+						windowWidth = buildingWidth/5;
+						windowHeight = 15;
+
+						for (int i = 0; i < 5 ; i++)
+						{ fill(255,255,26);
+							////windowX and co were made for right half of build.
+							rect(windowX,windowY,windowWidth,windowHeight);
+							fill(255,255,26);
+							//windowOther and co were made for the two halves of the builds.
+							rect(windowOther,windowY,windowWidth,windowHeight);
+
+							windowY += 25; // you can't say windowX here because it moves the
+							//windows 50 pixels to the right
+							//changing the number on the right changes the density of the dows
+						}
+
          }
 
 				void update()
