@@ -12,13 +12,15 @@
 				int GREY = 204;
 // i added a test building
  	Building testBuilding = new Building (0, 200);
-	Building secondBuilding = new Building (0, 200);
-	Building thirdBuilding = new Building (0,200);
+	Building secondBuilding = new Building (0,200);
+	Skyline testSkyline = new Skyline (375);
+	Skyline secondSkyline = new Skyline (230);
+	Skyline thirdSkyline = new Skyline (90);
 
         //This function only runs once at the start of the program
         void setup() {
           size(WINDOW_WIDTH, WINDOW_HEIGHT); //sets the size of the window
-        frameRate(REFRESH_RATE_PER_SECOND); //how many times the draw function is called per second
+          frameRate(REFRESH_RATE_PER_SECOND); //how many times the draw function is called per second
         }
 
         //called repeatedly
@@ -26,79 +28,139 @@
         	background(0,0,0); //needed in the draw function to "clear" the screen between updates
 
 	  		//TODO:Call drawSkyline on your Skyline object
-			//drawSkyline();
+			//  drawSkyline();
 
-			testBuilding.moveBuilding();
-			secondBuilding.moveBuilding();
-			thirdBuilding.moveBuilding();
+		  	//testBuilding.moveBuilding();
+				//secondBuilding.moveBuilding();
+				testSkyline.moveSkyline();
+				secondSkyline.moveSkyline();
+				thirdSkyline.moveSkyline();
+
+				noStroke();
+				fill(234,229,234);
+				ellipse(20,20,20,20);
         }
 
 		class Skyline {
 			//attributes
 			ArrayList<Building> buildingList;
-			var buildingX;
+		  var buildingX; //change to buildingX ?
 
-			Skyline(){
+			var maxBuildingHeight;
+
+
+			Skyline(var maxBh){
 				buildingList = new ArrayList<Building>();
-				buildingX = 1;
+				buildingX = 0;
+				maxBuildingHeight = maxBh;
 			  //when a Skyline is created it automatically has enough buildings to fill the screen
+				fillSkyline();
 			}
 
-			void moveSkyline(){
+		void moveSkyline(){
 				//TODO:update and draw the skyline, add buildings as buildings leave the screen
-				update();
-				drawSkyline();
+			update();
+			drawSkyline();
 			}
 
 				void drawSkyline()
 				{
 				for(var i = 0; i < buildingList.size(); i++) {
-					Building Building = buildingList.get(i);
+					Building currentBuilding = buildingList.get(i);
+				  if (currentBuilding.getBuildingX() < 400){
+							 fill(188,214,226);
+						}
+						if (currentBuilding.getBuildingX() < 300){
+								 fill(153,175,226);
+							}
+						if (currentBuilding.getBuildingX() < 200){
+								 fill(125,149,242);
+							}
+					//	 if (secondSkyline.drawSkyline() < 100){
+						//		fill(100,240,90);
+							//}
 					currentBuilding.drawBuilding();
-					currentBuilding.updateAndScroll();
-				} //TODO:loop through buildingList and draw each Building
+				} //TODO:loopthrough buildingList and draw each Building
 			}
 
+			void update(){
+				for(var i = 0; i < buildingList.size(); i++) {
+					Building currentBuilding = buildingList.get(i);
+					currentBuilding.update();
+			     if (currentBuilding.getBuildingX() < -10){
+						 addBuilding();
+					 }
+				 }
+
+			}
+			//getter function for building class (lol)
+			// if this building has left the screen, add another building
+
+		void fillSkyline(){
+			while (buildingX < 1000){
+				addBuilding();
+			}
+
+		}
+
 			void addBuilding(){
-					var buildingWidth = random(10,80);
-					Building newBuilding = new Building(buildingX, buildingWidth);
-
-					buildingList.add(newBuilding);
-
-		 		buildingX += buildingWidth +5;
+				var buildingWidth = random(10,80);
+				Building newBuilding = new Building(buildingX, buildingWidth, maxBuildingHeight);
+				buildingList.add(newBuilding);
+		 		buildingX += buildingWidth + random(1,7);
 				}
 			}
 
         class Building {
 					//attributes
-        	var buildingX, buildingY, buildingHeight, buildingWidth, buildingColor;
+        var buildingX, buildingY, buildingHeight, buildingWidth, buildingColor;
 //attributes on left, parameters on right
-					Building (var xPos,var bY) {
-					 buildingX = xPos;
-					 buildingY = bY;
-					 buildingHeight = 600-buildingY;
-					 buildingWidth = random(30,70);
+				Building (var xPos,var bw, var maxBuildingHeight) {
+					buildingX = xPos;
+		      buildingHeight = random(75, maxBuildingHeight);
+					buildingY = 400 - buildingHeight;
+		      buildingWidth = bw;
+				//	buildingColor = color(random(0,150));
 					}
+// to keep the colors consistent i have to make the building colors a paramater
+//for skyline class and building
+				void drawBuilding(){
+				//	fill(buildingColor);
+					stroke(0,0,0);
+ 	        rect(buildingX, buildingY, buildingWidth, buildingHeight);
 
-					void drawBuilding(){
- 	         fill(0,0,255);
- 	         rect(buildingX, buildingY, buildingWidth, buildingHeight);
-          }
+					
+         }
 
-					void update()
+				void update()
 					{
-					 buildingX ++;
-			  		if (buildingX>640){
-					add Building();
-						//buildingX = -40;
-				}
-				  }
+				 buildingX--;
+				// if (buildingX>640){
+ 				//buildingX = -40;
+ 		//}
+		  }
 
-					void moveBuilding()
-					{
-						update();
-						drawBuilding();
-					}
+
+		int getBuildingX(){
+			return buildingX;
+		}
+
+		//void deleteBuilding(){
+			//if (buildingX <= -45){
+				//deleteBuilding
+		//	}
+		//}
+	//	int deleteBuilding(){
+		//	if (buildingX <= -45)
+			//()
+
+	//	}
+
+	void moveBuilding()
+			{
+					update();
+					drawBuilding();
+		    	}
 				}
 
         </script>
