@@ -10,12 +10,15 @@
 
 				int REFRESH_RATE_PER_SECOND = 30;
 				int GREY = 204;
+
+        speed = random(1,4);
+
 // i added a test building
  	Building testBuilding = new Building (0, 200);
 	Building secondBuilding = new Building (0,200);
-	Skyline testSkyline = new Skyline (375);
-	Skyline secondSkyline = new Skyline (230);
-	Skyline thirdSkyline = new Skyline (90);
+	Skyline testSkyline = new Skyline (375, speed);
+	Skyline secondSkyline = new Skyline (230, speed);
+	Skyline thirdSkyline = new Skyline (90, speed);
 
         //This function only runs once at the start of the program
         void setup() {
@@ -51,13 +54,16 @@
 			//attributes
 			ArrayList<Building> buildingList;
 		  var buildingX; //change to buildingX ?
-
+			var buildingY;
+      var gone = 0, speed;
 			var maxBuildingHeight;
 
 
-			Skyline(var maxBh){
+			Skyline(var maxBh, var fast){
 				buildingList = new ArrayList<Building>();
 				buildingX = 0;
+				speed = fast;
+				//buildingY = 0;
 				maxBuildingHeight = maxBh;
 			  //when a Skyline is created it automatically has enough buildings to fill the screen
 				fillSkyline();
@@ -71,16 +77,23 @@
 
 				void drawSkyline()
 				{
+
 				for(var i = 0; i < buildingList.size(); i++) {
+           if (buildingX<0) {
+						 gone = i;
+					 }
+				}
+
+				for(var i = gone; i < buildingList.size(); i++) {
 					Building currentBuilding = buildingList.get(i);
-				  if (currentBuilding.getBuildingX() > 400){
-							 fill(188,214,226);
+				  if (currentBuilding.getBuildingY() > 400){
+							 fill(28,24,226);
 						}
-						if (currentBuilding.getBuildingX() < 400){
-								 fill(153,175,226);
+						if (currentBuilding.getBuildingY() < 300){
+								 fill(13,9,226);
 							}
-						if (currentBuilding.getBuildingX() < 200){
-								 fill(125,149,242);
+						if (currentBuilding.getBuildingY() < 200){
+								 fill(225,149,242);
 							}
 					//	 if (secondSkyline.drawSkyline() < 100){
 						//		fill(100,240,90);
@@ -90,7 +103,7 @@
 			}
 
 			void update(){
-				for(var i = 0; i < buildingList.size(); i++) {
+				for(var i = gone; i < buildingList.size(); i++) {
 					Building currentBuilding = buildingList.get(i);
 					currentBuilding.update();
 			     if (currentBuilding.getBuildingX() < -10){
@@ -111,7 +124,7 @@
 
 			void addBuilding(){
 				var buildingWidth = random(10,80);
-				Building newBuilding = new Building(buildingX, buildingWidth, maxBuildingHeight);
+				Building newBuilding = new Building(buildingX, buildingWidth, maxBuildingHeight, speed);
 				buildingList.add(newBuilding);
 		 		buildingX += buildingWidth + random(1,7);
 				}
@@ -119,13 +132,14 @@
 
         class Building {
 					//attributes
-        var buildingX, buildingY, buildingHeight, buildingWidth, buildingColor;
+        var buildingX, buildingY, buildingHeight, buildingWidth, buildingColor, speed;
 //attributes on left, parameters on right
-				Building (var xPos,var bw, var maxBuildingHeight) {
+				Building (var xPos,var bw, var maxBuildingHeight, var motion) {
 					buildingX = xPos;
 		      buildingHeight = random(75, maxBuildingHeight);
 					buildingY = 400 - buildingHeight;
 		      buildingWidth = bw;
+					speed = motion;
 				//	buildingColor = color(random(0,150));
 					}
 // to keep the colors consistent i have to make the building colors a paramater
@@ -158,7 +172,7 @@
 
 				void update()
 					{
-				 buildingX--;
+				 buildingX -= speed;
 				// if (buildingX>640){
  				//buildingX = -40;
  		//}
@@ -167,6 +181,10 @@
 
 		int getBuildingX(){
 			return buildingX;
+		}
+
+		int getBuildingY(){
+			return buildingY;
 		}
 
 		//void deleteBuilding(){
